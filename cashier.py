@@ -1,0 +1,78 @@
+'''
+Steps of the project:
+1- Accept the name of the product purchased by the consumer and the quantity of the purchased product.
+2- The step one must be done repeatedly until all the products are entered.
+3- After step one and step two are completed, the cashier must accept the consumer's supermarket membership. Depending on the type of membership a discount will be given.
+4- There will be three types of memberships, Gold, Silver and Bronze with a discount of 20%, 10% and 5% respectively.
+5- For the final step, it's going to be calculated the total bill amount depending upon the price of the products and print the detailed bill to the output screen.
+'''
+
+def enter_products(): # Function 1
+    buying_data = {}
+    enter_details = True
+    while enter_details:
+        details = input('Press A to add product and Q to quit: ')
+        if details.lower() == 'a':
+            product = input('Enter product: ')
+            quantity = int(input('Enter quantity: '))
+            buying_data.update({product: quantity})
+        elif details == 'q':
+            enter_details = False
+        else:
+            print('Please select a correct option')
+    return buying_data
+
+def get_price(product, quantity): # Function 2
+    price_data = {
+        'Biscuit': 3,
+        'Coke': 2,
+        'Chicken': 5,
+        'Meat': 8,
+        'Fish': 3,
+        'Salad': 4,
+        'Apple': 3,
+        'Onion': 3
+    }
+    subtotal = price_data[product] * quantity 
+    print(f'{product}:${str(price_data[product])} x {str(quantity)} = {str(subtotal)}')
+    return subtotal
+
+def get_discount(bill_amount, membership): # Function 3
+    discount = 0
+    if bill_amount >= 25:
+        if membership.lower() == 'gold':
+            bill_amount = bill_amount * 0.80
+            discount = 20
+        elif membership.lower() == 'silver':
+            bill_amount = bill_amount * 0.90
+            discount = 10
+        elif membership.lower() == 'bronze':
+            bill_amount = bill_amount * 0.95
+            discount = 5
+        print(f'{str(discount)}% off for {membership} membership on total amount: ${str(bill_amount)}')
+    else:
+        print('No discount on amount less than $25')
+    return bill_amount
+
+def make_bill(buying_data, membership): # Function 4
+    bill_amount = 0
+    for key, value in buying_data.items():
+        bill_amount += get_price(key, value)
+    bill_amount = get_discount(bill_amount, membership)
+    print(f'The discounted amount is ${str(bill_amount)}')
+
+buying_data = enter_products() # It makes a call to the Function 1
+membership = input('Enter customer membership(Gold/Silver/Bronze): ')
+make_bill(buying_data, membership) # It makes a call to the Function 4
+
+'''
+Explanation of each function.
+    Function 1: it has the utility to make the Cashier to input all the products bought one by one and store them in a dictionary called "buying_data" and return it back.
+    Function 2: the functionality of this function is to give the subtotal of a single product as per its price and quantity mentioned.
+    Function 3: here, as per the total bill amount will be decided if the discount is applicable or not.
+    Function 4: 
+    loop starts:
+        Call Function 2 until subtotal is added for all products within buying_data
+    loop ends.
+        Call Function 3 to calculate discounted amount.
+'''
