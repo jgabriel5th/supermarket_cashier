@@ -9,14 +9,28 @@ Steps of the project:
 
 def enter_products(): # Function 1
     buying_data = {}
+    supermarket_items = {
+        'Biscuit': 3.50,
+        'Coke': 2.50,
+        'Chicken': 5.49,
+        'Meat': 8.00,
+        'Fish': 3.25,
+        'Salad': 3.99,
+        'Apple': 3.00,
+        'Onion': 3.75
+    }
     enter_details = True
     while enter_details:
-        details = input('Press A to add product and Q to quit: ')
+        details = input('Press A to add product, C to check the the available products and Q to quit: ')
         if details.lower() == 'a':
             product = input('Enter product: ')
             quantity = int(input('Enter quantity: '))
             buying_data.update({product: quantity})
-        elif details == 'q':
+        elif details.lower() == 'c':
+            print('Available items:')
+            for item, price in supermarket_items.items():
+                print(f'{item} - ${price:.2f}')
+        elif details.lower() == 'q':
             enter_details = False
         else:
             print('Please select a correct option')
@@ -24,18 +38,19 @@ def enter_products(): # Function 1
 
 def get_price(product, quantity): # Function 2
     price_data = {
-        'Biscuit': 3,
-        'Coke': 2,
-        'Chicken': 5,
-        'Meat': 8,
-        'Fish': 3,
-        'Salad': 4,
-        'Apple': 3,
-        'Onion': 3
+        'Biscuit': 3.50,
+        'Coke': 2.50,
+        'Chicken': 5.49,
+        'Meat': 8.00,
+        'Fish': 3.25,
+        'Salad': 3.99,
+        'Apple': 3.00,
+        'Onion': 3.75
     }
     subtotal = price_data[product] * quantity 
-    print(f'{product}:${str(price_data[product])} x {str(quantity)} = {str(subtotal)}')
-    return subtotal
+    rounded_subtotal = round(subtotal, 2)
+    print(f'{product}:${str(price_data[product])} x {str(quantity)} = {str(rounded_subtotal)}')
+    return rounded_subtotal
 
 def get_discount(bill_amount, membership): # Function 3
     discount = 0
@@ -59,7 +74,7 @@ def make_bill(buying_data, membership): # Function 4
     for key, value in buying_data.items():
         bill_amount += get_price(key, value)
     bill_amount = get_discount(bill_amount, membership)
-    print(f'The discounted amount is ${str(bill_amount)}')
+    print(f'The total amount is ${str(bill_amount)}')
 
 buying_data = enter_products() # It makes a call to the Function 1
 membership = input('Enter customer membership(Gold/Silver/Bronze): ')
