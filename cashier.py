@@ -22,22 +22,26 @@ def welcome_function(): # Function 1
     return supermarket_items
 
 def enter_products(supermarket_items): # Function 2
-    buying_data = {}
-    enter_details = True
-    while enter_details:
-        details = input('Press A to add product, C to check the the available products and Q to quit: ')
-        if details.lower() == 'a':
-            product = input('Enter product: ')
-            quantity = int(input('Enter quantity: '))
-            buying_data.update({product: quantity})
-        elif details.lower() == 'c':
-            print('Available items:')
-            for item, price in supermarket_items.items():
-                print(f'{item} - ${price:.2f}')
-        elif details.lower() == 'q':
-            enter_details = False
-        else:
-            print('Please select a correct option')
+    try:
+        buying_data = {}
+        enter_details = True
+        while enter_details:
+            details = input('Press A to add product, C to check the the available products and Q to quit: ')
+            if details.lower() == 'a':
+                product = input('Enter product: ')
+                quantity = int(input('Enter quantity: '))
+                buying_data.update({product: quantity})
+            elif details.lower() == 'c':
+                print('Available items:')
+                for item, price in supermarket_items.items():
+                    print(f'{item} - ${price:.2f}')
+            elif details.lower() == 'q':
+                enter_details = False
+            else:
+                print('Please select a correct option')
+    except Exception as e:
+        print(f'The exception was: {e}')
+        print("Try again!")
     return buying_data
     
 def get_price(supermarket_items, product, quantity): # Function 3
